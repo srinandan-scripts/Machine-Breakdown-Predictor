@@ -45,7 +45,14 @@ def create_features(df, holidays):
     df['Month'] = df['Date'].dt.month
     df['IsHoliday'] = df['Date'].isin(holidays).astype(int)
 
+    #df['Breakdown'] = ((df['A Mech b/d'] + df['B  Elec b/d']) >= 2).astype(int)
+    # Ensure breakdown columns are numeric
+    df['A Mech b/d'] = pd.to_numeric(df['A Mech b/d'], errors='coerce').fillna(0)
+    df['B  Elec b/d'] = pd.to_numeric(df['B  Elec b/d'], errors='coerce').fillna(0)
+
+    # Create binary breakdown target
     df['Breakdown'] = ((df['A Mech b/d'] + df['B  Elec b/d']) >= 2).astype(int)
+
 
     for window, smooth in zip([7, 14, 30], [3, 5, 7]):
         df[f'Rolling_{window}'] = df.groupby('Machine')['Breakdown'].transform(lambda x: x.rolling(window, min_periods=1).sum())
