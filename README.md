@@ -9,7 +9,7 @@
 
 ## Setup
 - Edit `config.yaml` to adjust holidays, shift definitions, etc.
-- Run: `python run_prediction.py`
+- Run: `Predict Breakdown Master.py`
 
 ## Requirements
 - pandas, numpy, xgboost, scikit-learn, matplotlib, yaml, holidays
